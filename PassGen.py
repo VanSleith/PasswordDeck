@@ -1,3 +1,4 @@
+import passwordmeter
 import random
 
 LOWERCASE_ASCI = list(range(97, 123))
@@ -7,10 +8,14 @@ SPECIAL_ASCI = list(range(33, 48)) + list(range(58, 65)) + list(range(91, 97)) +
 
 
 def charGen(charList, passsword):
-    ch = random.choice(charList)
-    while chr(ch) in passsword:
-        ch = random.choice(charList)
-    return chr(ch)
+    no_use = set()
+    while len(no_use) < 5:
+        no_use.add(random.choice(charList))
+    toChose = set(charList) - set(no_use)
+    ch = random.sample(toChose, 1)
+    while chr(ch[0]) in passsword:
+        ch = random.sample(toChose, 1)
+    return chr(ch[0])
 
 
 def passGen(lenght, charList):
@@ -39,28 +44,50 @@ def generate(options, lenght):
     return passGen(lenght, characters)
 
 
+def isInT(options, T):
+    check = []
+    for ch in options:
+        print(ch)
+        if ch in T:
+            check.append(ch)
+    return check
+
+
 def main():
     while (1):
         print("Choose options; write them separated with spaces")
         options = input("(A)ll-or- (L)owercase, (U)percase,(N)umbers, (S)pecjal ").split()
-        check = [ch for ch in options if ch in ["A", "L", "U", "N", "S"]]  # ToDo Right options checking algorithm
-        while not check:
+        # check =  [ch for ch in options if ch in ["A", "L", "U", "N", "S"]]  # ToDo Why this dos not work?
+        while not isInT(options, ["A", "L", "U", "N", "S"]):
             print("Entered wrong option ", *options)
             options = input("(A)ll-or- (L)owercase, (U)percase,(N)umbers, (S)pecjal ").split()
-        print("Your options: ", *options)
+        # print("Your options: ", *check)
         howLong = None
         while True:
             try:
-                howLong = int(input("How long? "))
+                howLong = int(input("Enter lenght: "))
                 break
             except Exception as e:
-                howLong = input("Lenght can be ONLY a digit! Enter lenght")
+                print("Lenght can be ONLY a digit!")
                 # print("\nLenght: " + howLong)
         password = generate(options, howLong)
+        strenght, impro = passwordmeter.test(password)
+        count = 0
+        while strenght < 0.7:
+            if count > 100:
+                break
+            print(strenght)
+            print(password)
+            password = generate(options, howLong)
+            strenght, impro = passwordmeter.test(password)
+            count += 1
         print("\n\nGenerated password: " + password)
+
+        print(strenght)
         whatToDo = input("Do you wana exit?[y/n] ")
         if whatToDo == "y":
             break
 
 
-main()
+if __name__ == "__main__":
+    main()
