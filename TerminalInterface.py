@@ -12,7 +12,7 @@ def isInT(A, T):
     return check
 
 
-class main:
+class Main:
     options = None
     length = None
     password = None
@@ -20,7 +20,7 @@ class main:
     generator = None
 
     def __init__(self):
-        self.generator = PassGenerator(self.length)
+        pass
 
     def setPassOptions(self):
         print("Choose options; write them separated with spaces")
@@ -34,7 +34,8 @@ class main:
     def setLenght(self):
         while True:
             try:
-                self.generator.setLength(int(input("Enter length: ")))
+                self.length = int(input("Enter length: "))
+                self.generator = PassGenerator(self.length)
                 break
             except Exception as e:
                 print("Lenght can be ONLY a digit!")
@@ -65,4 +66,4 @@ class main:
 
 
 if __name__ == "__main__":
-    main().mainLoop()
+    Main().mainLoop()
