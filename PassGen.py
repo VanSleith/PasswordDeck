@@ -17,7 +17,7 @@ class PassGenerator:
         toChose = set(charList) - set(no_use)
         ch = random.sample(toChose, 1)
         while chr(ch[0]) in passsword:
-            ch = random.sample(toChose, 1)
+            ch = random.sample(toChose, 1)  # ToDo Find if it's better than allowing same characters
         return chr(ch[0])
 
     def passGen(self, charList):
@@ -43,4 +43,4 @@ class PassGenerator:
                 range(123, 127))
         if not characters:
             raise NotImplemented
-        return self.passGen(options)
+        return self.passGen(characters)

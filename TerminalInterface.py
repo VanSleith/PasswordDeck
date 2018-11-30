@@ -16,8 +16,8 @@ class Main:
     options = None
     length = None
     password = None
-    strenght = None
-    generator = None
+    strength = None
+    generator = PassGenerator(10)
 
     def __init__(self):
         pass
@@ -35,21 +35,21 @@ class Main:
         while True:
             try:
                 self.length = int(input("Enter length: "))
-                self.generator = PassGenerator(self.length)
+                self.generator.setLength(self.length)
                 break
             except Exception as e:
-                print("Lenght can be ONLY a digit!")
-                # print("\nLenght: " + self.lenght)
+                print("Length can be ONLY a digit!")
+                # print("\nLength: " + self.length)
 
     def generate(self):
         self.password = self.generator.generate(self.options)
-        self.strenght, impro = passwordmeter.test(self.password)
+        self.strength, impro = passwordmeter.test(self.password)
         count = 0
-        while self.strenght < 0.7:
+        while self.strength < 0.7:
             if count > 100:
                 break
             self.password = self.generator.generate(self.options)
-            self.strenght, impro = passwordmeter.test(self.password)
+            self.strength, impro = passwordmeter.test(self.password)
             count += 1
 
     def mainLoop(self):
@@ -59,8 +59,8 @@ class Main:
             self.generate()
             print("\n\nGenerated password: " + self.password)
 
-            print(self.strenght)
-            whatToDo = input("Do you wana exit?[y/n] ")
+            print(self.strength)
+            whatToDo = input("Do you want to exit?[y/n] ")
             if whatToDo == "y":
                 break
 
