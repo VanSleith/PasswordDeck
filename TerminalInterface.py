@@ -3,15 +3,6 @@ import passwordmeter
 from PassGen import PassGenerator
 
 
-def isInT(A, T):
-    check = []
-    for ch in A:
-        print(ch)
-        if ch in T:
-            check.append(ch)
-    return check
-
-
 class Main:
     options = None
     length = None
@@ -25,8 +16,8 @@ class Main:
     def setPassOptions(self):
         print("Choose options; write them separated with spaces")
         self.options = input("(A)ll-or- (L)owercase, (U)percase,(N)umbers, (S)pecjal ").split()
-        # check =  [ch for ch in options if ch in ["A", "L", "U", "N", "S"]]  # ToDo Why this dos not work?
-        while not isInT(self.options, ["A", "L", "U", "N", "S"]):
+        check = [ch for ch in self.options if ch in ["A", "L", "U", "N", "S"]]
+        while not check:
             print("Entered wrong option ", *self.options)
             self.options = input("(A)ll-or- (L)owercase, (U)percase,(N)umbers, (S)pecjal ").split()
         # print("Your options: ", *check)
