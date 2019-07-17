@@ -44,3 +44,9 @@ class PassGenerator:
         if not characters:
             raise NotImplemented
         return self.passGen(characters)
+
+    # def __str__(self):
+    #     return self.generate("A")
+
+    def __repr__(self):
+        return self.generate("A")
