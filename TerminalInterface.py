@@ -26,7 +26,7 @@ class Main:
         while True:
             try:
                 self.length = int(input("Enter length: "))
-                self.generator.setLength(self.length)
+                self.generator.set_length(self.length)
                 break
             except Exception as e:
                 print("Length can be ONLY a digit!")
